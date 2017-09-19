@@ -8,6 +8,6 @@
 /\/\/\t/   { gsub(/\/\/\t/,"//"); }
 /\t$/      { gsub(/\t$/,""); }
 //         { sub(/\t/,"\tDomain_grep\t"); }
-# folloing you can chenge the separator 
+# here you can change the separator 
 #/\t/      { gsub(/\t/,"|"); }
 //         { print $0 }
