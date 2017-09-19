@@ -32,9 +32,9 @@ if [ -z $tshark_path ]; then
 # if no argument then print help
 if [ $# -lt 1 ]; then
 	echo "provide network interface, for exampel eth0 or enp1s0"  	
-	echo "run it as privilidged user, so you can bind to the interface, aka sudo or root"  	
+	echo "it requires privilidged user, so you can bind to the interface, aka sudo or root"  	
 	echo ""
-	echo "Usage: sudo domain_grep.sh <devide>" 
+	echo "Usage: domain_grep.sh <devide>" 
 		exit 2
 	fi
 
@@ -42,4 +42,5 @@ DEVICE="$1"
 
 echo "listening on interface $DEVICE"
 
-tshark -l -i "$DEVICE" -T fields -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | sed 's/\t1\t/ https:\/\//' | sed 's/\thttp\t/ http:\/\//'   | sed "s/^/ `date -R` DomainGRAP  /" | sed 's/\t//g'
+# not nice to use sudo inside, but seems bug buffer pipe output of tshark  
+sudo tshark  -q -l -i "$DEVICE" -T fields -e frame.time -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | awk -f ./make_nice.awk 
