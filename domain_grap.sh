@@ -6,7 +6,7 @@
 #
 #  There are some limitations  
 #    TLS	- SNI extension is part of the client_hello handshake. There is no information how long the session was, how many request, volume etc. User can browse 3h on the same page.
-#    HTTP       - host header can present only on first HTTP rehouse access in the case of pipelining. There is not information on size etc 
+#    HTTP       - greps only GET requests for host header and only on first HTTP request in case of pipelining. There is not information on size etc 
 #
 # If there is no TLS SNI extension or HTTP host header no output is provides (older versions of SSL and HTTP 1.0)
 #
@@ -43,4 +43,6 @@ DEVICE="$1"
 echo "listening on interface $DEVICE"
 
 # not nice to use sudo inside, but seems bug buffer pipe output of tshark  
-sudo tshark  -q -l -i "$DEVICE" -T fields -e frame.time -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | awk -f ./make_nice.awk 
+sudo tcpdump -i "$DEVICE" -l -s 1500 '(port 80 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or ((tcp[((tcp[12:1] & 0xf0) >> 2)+5:1] = 0x01) and (tcp[((tcp[12:1] & 0xf0) >> 2):1] = 0x16))' -w - | tshark -l -r - -T fields -e frame.time -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | awk -f ./make_nice.awk
+
+
