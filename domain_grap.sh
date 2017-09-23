@@ -43,6 +43,6 @@ DEVICE="$1"
 echo "listening on interface $DEVICE"
 
 # not nice to use sudo inside, but seems bug buffer pipe output of tshark  
-sudo tcpdump -i "$DEVICE" -l -s 1500 '(port 80 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or ((tcp[((tcp[12:1] & 0xf0) >> 2)+5:1] = 0x01) and (tcp[((tcp[12:1] & 0xf0) >> 2):1] = 0x16))' -w - | tshark -l -r - -T fields -e frame.time -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | awk -f ./make_nice.awk
+sudo tcpdump -i "$DEVICE" -l -s 1500 '(port 443 and ip6 and ip6[72:1]=0x16)  or  (port 80 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or ((tcp[((tcp[12:1] & 0xf0) >> 2)+5:1] = 0x01) and (tcp[((tcp[12:1] & 0xf0) >> 2):1] = 0x16))' -w - | tshark -l -r - -T fields -e frame.time -e ip.src -e ipv6.src -e ssl.handshake.type -e http -e ssl.handshake.extensions_server_name -e http.host  -Y "ssl.handshake.extensions_server_name or http.host" | awk -f ./make_nice.awk
 
 
