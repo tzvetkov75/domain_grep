@@ -10,6 +10,6 @@
 /\/\/\t/   { gsub(/\/\/\t/,"//"); }
 /\t$/      { gsub(/\t$/,""); }
 //         { sub(/\t/,"\tDomain_grep\t"); }
-# uncomment to the separator 
+# uncomment to change the separator. Default separator is tab \t 
 #/\t/      { gsub(/\t/,"|"); }
 //         { print $0 }
