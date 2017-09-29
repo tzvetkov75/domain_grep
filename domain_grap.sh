@@ -2,12 +2,12 @@
 #
 #  Extracts domain name from HTTP host header or TLS SNI extension to stdout from traffic on interface. 
 #  
-#  Generate a log-line for each accessed recourses. It can be used to generate very basic statistic of internet usagei in small networks when used. 
+#  Generate a log-line for each accessed recourses. It can be used to generate very basic statistic of Internet usage in small networks. 
 #  Can be used with port mirror on switches
 #
 #  There are some limitations:  
 #    TLS	- SNI extension is part of the client_hello handshake. There is no information how long the session was, how many request, volume etc. 
-#                 User can browse 3h on the same page. IPv6 is supported but it is possible to miss some TLS handshakes - currenlty, IPv6/TCP header lenght is hardcoded (BPF bug)
+#             User can browse 3h on the same page. IPv6 is supported but it is possible to miss some TLS handshakes - currently, IPv6/TCP header length is hard coded (BPF bug)
 #    HTTP       - greps only GET requests for host header and only on first HTTP request in case of pipelining. There is not information on size etc 
 #
 # If there is no TLS SNI extension or HTTP host header no output is provides (older versions of SSL and HTTP 1.0)
