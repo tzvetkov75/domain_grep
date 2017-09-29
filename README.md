@@ -31,7 +31,7 @@ It can be see as more accurate to DNS statistics because of the DNS caching (hos
 
 Delimiter is tab  \t 
 
-Date <tab> Domain_Grep <tab> Source LAN IP <tab> Destination domain
+	Date  \t  "Domain_Grep"  \t  Source LAN IP \t Destination domain
 
 ## Example 
 
