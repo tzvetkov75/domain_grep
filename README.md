@@ -1,4 +1,4 @@
-﻿# Domain Grap
+﻿# Domain Grep
 
 Extracts domain name from HTTP host header or TLS SNI extension to stdout from traffic on interface. 
   
@@ -36,7 +36,7 @@ Delimiter is tab  \t
 ## Example 
 
 ```
-# ./domain_grap.sh eth0
+# ./domain_grep.sh eth0
 listening on interface eth0
 
 tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 1500 bytes

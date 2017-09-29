@@ -33,8 +33,8 @@ if [ -z $tshark_path ]; then
 	fi
 
 
-test if `itcpdump` is available
-tcpdump_path=`which tshark`
+test if `tcpdump` is available
+tcpdump_path=`which tcpdump`
 if [ -z $tcpdump_path ]; then
 	echo 'Tcpdump is not available, please install it'
 		exit 2
