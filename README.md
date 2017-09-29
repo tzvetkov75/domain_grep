@@ -5,6 +5,7 @@ Extracts domain name from HTTP host header or TLS SNI extension to stdout from t
 ## Description
 Generate a log-line for each accessed recourses. It can be used to generate very basic statistic of Internet usage in small networks. Can be used with port mirror on switches. 
 
+
 ## Similarity to DNS statistics
 It can be see as more accurate to DNS statistics because of the DNS caching (hosts use DNS cache to avoid resolving every time). On the other hand, TLS SNI also does not contain every request, since multiple request can be made 
 
@@ -24,7 +25,14 @@ It can be see as more accurate to DNS statistics because of the DNS caching (hos
 
 ## Known bugs 
  Sudo in the script :-( do not need to run it with sudo. Need to be fixed. IPv6 header length is hardcoded due to BPF bug. Some IPv6 packets can be missed.  
- 
+
+
+## Output format 
+
+Delimiter is tab  \t 
+
+Date <tab> Domain_Grep <tab> Source LAN IP <tab> Destination domain
+
 ## Example 
 
 ```
